@@ -12,7 +12,7 @@ public class Account {
     public void Withdraw (double amount){
         saldo -= amount;
     }
-    public boolean transfer(double amount, Account targetAccount) {
+    public boolean Transfer(double amount, Account targetAccount) {
         if (amount > 0 && amount <= saldo) {
             this.Withdraw(amount);
             targetAccount.Add(amount);
