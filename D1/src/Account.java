@@ -7,10 +7,10 @@ public class Account {
         this.saldo = 100;
     }
     public void Add(double amount){
-        saldo += amount;
+        setSaldo(getSaldo() + amount);
     };
     public void Withdraw (double amount){
-        saldo -= amount;
+        setSaldo(getSaldo() - amount);
     }
     public boolean Transfer(double amount, Account targetAccount) {
         if (amount > 0 && amount <= saldo) {
@@ -25,4 +25,19 @@ public class Account {
         return saldo;
     }
 
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
 }
