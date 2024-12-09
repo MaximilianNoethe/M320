@@ -25,31 +25,37 @@ public class Main {
             person.displayInfo();
             System.out.println("------------------------");
         }*/
-        Scanner scanner = new Scanner(System.in);
-        boolean validInput = false;
-        int choice = 0;
-        while (!validInput) {
+        while (true) {
             System.out.println("--- Media Manager ---");
             System.out.println("1. Display all media");
             System.out.println("2. Exit");
             System.out.print("Choose an option: ");
-            if(scanner.hasNextInt()) {
-                choice = scanner.nextInt;
-                switch (choice) {
-                    case 1:
-                        mediaManager.printAllMedia();
 
-                        break;
+            String input = scanner.nextLine();
+            int choice;
 
-                    case 2:
-                        System.out.println("Exiting...");
-                        scanner.close();
-                        return;
+            try {
+                choice = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number (1 or 2).\n");
+                continue;
+            }
 
-                    default:
-                        System.out.println("Invalid choice. Please try again.");
 
-                }
+            switch (choice) {
+                case 1:
+                    mediaManager.printAllMedia();
+
+                    break;
+
+                case 2:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+
             }
         }
     }
