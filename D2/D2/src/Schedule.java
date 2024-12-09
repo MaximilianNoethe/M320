@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Schedule {
@@ -11,23 +12,22 @@ public class Schedule {
         flights.add(flight);
     }
 
-    public Flight getFlight(String flightNumber) {
+    public Flight findFlight(String flightNumber, LocalDateTime dateTime) {
         for (Flight flight : flights) {
-            if (flight.getFlightNumber().equals(flightNumber)) {
+            if (flight.getFlightNumber().equals(flightNumber) &&
+                    flight.getDepartureDateTime().equals(dateTime)) {
                 return flight;
             }
         }
         return null;
     }
 
-    public void printFlights() {
-        if (flights.isEmpty()) {
-            System.out.println("No flights available.");
-        } else {
-            System.out.println("Available flights:");
-            for (Flight flight : flights) {
-                System.out.println("- Flight " + flight.getFlightNumber());
-            }
+    public void printAllFlights() {
+        System.out.println("\n--- Flight Schedule ---");
+        for (Flight flight : flights) {
+            System.out.println("Flight Number: " + flight.getFlightNumber());
+            System.out.println("Departure: " + flight.getDepartureDateTime());
+            System.out.println("------------------------");
         }
     }
 }

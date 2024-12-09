@@ -1,66 +1,86 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Schedule schedule = new Schedule();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-        schedule.addFlight(new Flight("AB123"));
-        schedule.addFlight(new Flight("CD456"));
 
         while (true) {
-            System.out.println("Menu:\n" +
-                    "1. Add a Passenger to a Flight\n" +
-                    "2. Print Passengers of a Flight\n" +
-                    "3. Print Available Flights\n" +
-                    "4. Exit\n" +
-                    "Choose an option: ");
-
+            System.out.println("\n--- Flight Management System ---");
+            System.out.println("1. Add a new flight");
+            System.out.println("2. Register a passenger for a flight");
+            System.out.println("3. Display all flights");
+            System.out.println("4. Display passenger list for a flight");
+            System.out.println("5. Exit");
+            System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter flight number: ");
+                    System.out.print("Enter flight number: ");
                     String flightNumber = scanner.nextLine();
-                    Flight flight = schedule.getFlight(flightNumber);
 
-                    if (flight != null) {
-                        System.out.println("Enter passenger name: ");
-                        String passengerName = scanner.nextLine();
-                        Passenger passenger = new Passenger(passengerName);
-                        flight.addPassenger(passenger);
-                        System.out.println("Passenger with name " + passengerName + " added to flight " + flightNumber + ".");
-                    } else {
-                        System.out.println("Flight " + flightNumber + " does not exist.");
-                    }
+                    System.out.print("Enter departure date and time (yyyy-MM-dd HH:mm): ");
+                    String dateTimeInput = scanner.nextLine();
+                    LocalDateTime departureDateTime = LocalDateTime.parse(dateTimeInput, formatter);
+
+                    Flight newFlight = new Flight(flightNumber, departureDateTime);
+                    schedule.addFlight(newFlight);
+                    System.out.println("Flight added successfully!");
                     break;
 
                 case 2:
-                    System.out.println("Enter Flight number: ");
-                    flightNumber = scanner.nextLine();
-                    flight = schedule.getFlight(flightNumber);
+                    System.out.print("Enter flight number: ");
+                    String flightNum = scanner.nextLine();
 
+                    System.out.print("Enter departure date and time (yyyy-MM-dd HH:mm): ");
+                    String dateTime = scanner.nextLine();
+                    LocalDateTime dateTimeParsed = LocalDateTime.parse(dateTime, formatter);
+
+                    Flight flight = schedule.findFlight(flightNum, dateTimeParsed);
                     if (flight != null) {
-                        flight.printPassengers();
+                        System.out.print("Enter passenger name: ");
+                        String passengerName = scanner.nextLine();
+                        flight.addPassenger(new Passenger(passengerName));
+                        System.out.println("Passenger added successfully!");
                     } else {
-                        System.out.println("Flight " + flightNumber + " does not exist,");
+                        System.out.println("Flight not found.");
                     }
                     break;
 
                 case 3:
-                    schedule.printFlights();
+                    schedule.printAllFlights();
                     break;
 
                 case 4:
+                    System.out.print("Enter flight number: ");
+                    String flightNo = scanner.nextLine();
+
+                    System.out.print("Enter departure date and time (yyyy-MM-dd HH:mm): ");
+                    String flightDateTime = scanner.nextLine();
+                    LocalDateTime flightDT = LocalDateTime.parse(flightDateTime, formatter);
+
+                    Flight foundFlight = schedule.findFlight(flightNo, flightDT);
+                    if (foundFlight != null) {
+                        foundFlight.printPassengerList();
+                    } else {
+                        System.out.println("Flight not found.");
+                    }
+                    break;
+
+                case 5:
                     System.out.println("Exiting...");
                     scanner.close();
                     return;
 
                 default:
-                    System.out.println("Invalid input. Please try again.");
+                    System.out.println("Invalid option. Please try again.");
             }
-
         }
     }
 }
