@@ -3,7 +3,15 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+/**
+ *
+ * @author Aryan and Max
+ */
 public class Main {
+    /**
+     * This program is used to add medias to the media list and display them.
+     * @param args
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Schedule schedule = new Schedule();
