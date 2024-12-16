@@ -1,14 +1,22 @@
 abstract class Figur {
     protected String characterName;
-    protected Waffenverhalten waffenverhalten;
 
-    public Figur(String characterName, Waffenverhalten waffenverhalten) {
+    public Figur(String characterName) {
         this.characterName = characterName;
-        this.waffenverhalten = waffenverhalten;
     }
 
-    public void anzeigen(){
-        System.out.println(characterName  + " - ");
-        waffenverhalten.verwendetWaffe();
+    public String getCharacterName() {
+        return characterName;
     }
+
+    public void setCharacterName(String characterName) {
+        this.characterName = characterName;
+    }
+
+    public void laufen() {
+        System.out.println(characterName + " läuft.");
+    }
+
+    // Abstrakte Methode kämpfen
+    public abstract void kämpfen();
 }
