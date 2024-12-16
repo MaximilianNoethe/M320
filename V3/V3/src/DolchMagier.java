@@ -4,7 +4,7 @@ class DolchMagier extends Figur {
     }
 
     @Override
-    public void kämpfen() {
+    public void kaempfen() {
         System.out.println(characterName + " kämpft mit einem Dolch und zaubert!");
     }
 }

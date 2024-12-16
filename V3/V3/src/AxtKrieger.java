@@ -4,7 +4,7 @@ class AxtKrieger extends Figur {
     }
 
     @Override
-    public void kämpfen() {
+    public void kaempfen() {
         System.out.println(characterName + " kämpft mit einer Axt!");
     }
 }

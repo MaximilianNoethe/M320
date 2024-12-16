@@ -18,5 +18,5 @@ abstract class Figur {
     }
 
     // Abstrakte Methode kämpfen
-    public abstract void kämpfen();
+    public abstract void kaempfen();
 }

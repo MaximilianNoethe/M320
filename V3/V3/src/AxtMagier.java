@@ -4,7 +4,7 @@ class AxtMagier extends Figur {
     }
 
     @Override
-    public void kämpfen() {
+    public void kaempfen() {
         System.out.println(characterName + " zaubert und kämpft mit einer Axt!");
     }
 }
