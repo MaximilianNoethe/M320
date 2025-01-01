@@ -1,8 +1,10 @@
 abstract class Figur {
     protected String characterName;
+    protected WaffenVerhalten waffenVerhalten; // Aggregation: Waffen-Verhalten ist flexibel
 
-    public Figur(String characterName) {
+    public Figur(String characterName, WaffenVerhalten waffenVerhalten) {
         this.characterName = characterName;
+        this.waffenVerhalten = waffenVerhalten;
     }
 
     public String getCharacterName() {
@@ -17,6 +19,6 @@ abstract class Figur {
         System.out.println(characterName + " läuft.");
     }
 
-    // Abstrakte Methode kämpfen
-    public abstract void kaempfen();
+    // abstract method "kämpfen" has to be implemented in subclasses
+    public abstract void kämpfen();
 }
