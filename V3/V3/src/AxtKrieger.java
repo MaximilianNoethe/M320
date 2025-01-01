@@ -1,10 +1,11 @@
 class AxtKrieger extends Figur {
     public AxtKrieger(String characterName) {
-        super(characterName);
+        super(characterName, new AxtVerhalten());
     }
 
     @Override
-    public void kaempfen() {
-        System.out.println(characterName + " kämpft mit einer Axt!");
+    public void kämpfen() {
+        System.out.print(characterName + " ");
+        waffenVerhalten.verwendeWaffe();
     }
 }

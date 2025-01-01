@@ -1,10 +1,11 @@
 class StabMagier extends Figur {
     public StabMagier(String characterName) {
-        super(characterName);
+        super(characterName, new StabVerhalten());
     }
 
     @Override
-    public void kaempfen() {
-        System.out.println(characterName + " kämpft mit einem magischen Stab!");
+    public void kämpfen() {
+        System.out.print(characterName + " ");
+        waffenVerhalten.verwendeWaffe();
     }
 }

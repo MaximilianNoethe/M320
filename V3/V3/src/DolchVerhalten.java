@@ -1,6 +1,6 @@
-public class DolchVerhalten implements Waffenverhalten {
+public class DolchVerhalten implements WaffenVerhalten {
     @Override
-    public void verwendetWaffe() {
+    public void verwendeWaffe() {
         System.out.println("Kämpft mit einem Dolch!");
     }
 }

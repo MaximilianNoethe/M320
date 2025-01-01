@@ -1,7 +1,7 @@
-public class AxtVerhalten implements Waffenverhalten {
+public class AxtVerhalten implements WaffenVerhalten {
 
     @Override
-    public void verwendetWaffe() {
+    public void verwendeWaffe() {
         System.out.println("Kämpft mit einer Axt!");
     }
 }

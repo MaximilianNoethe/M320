@@ -13,7 +13,7 @@ public class Main {
         for (Figur figur : figuren) {
             System.out.println("Figur: " + figur.getCharacterName());
             figur.laufen();
-            figur.kaempfen();
+            figur.kämpfen();
             System.out.println("-----------------------");
         }
     }
