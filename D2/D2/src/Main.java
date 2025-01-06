@@ -1,66 +1,102 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+/**
+ *
+ * @author Aryan and Max
+ */
 public class Main {
+    /**
+     * This program is used to add medias to the media list and display them.
+     * @param args
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Schedule schedule = new Schedule();
-
-        schedule.addFlight(new Flight("AB123"));
-        schedule.addFlight(new Flight("CD456"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         while (true) {
-            System.out.println("Menu:\n" +
-                    "1. Add a Passenger to a Flight\n" +
-                    "2. Print Passengers of a Flight\n" +
-                    "3. Print Available Flights\n" +
-                    "4. Exit\n" +
-                    "Choose an option: ");
+            System.out.println("--- Flight Management System ---");
+            System.out.println("1. Add a new flight");
+            System.out.println("2. Register a passenger for a flight");
+            System.out.println("3. Display all flights");
+            System.out.println("4. Display passenger list for a flight");
+            System.out.println("5. Exit");
+            System.out.print("Choose an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice;
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please type a number from 1 to 5.\n");
+                continue;
+            }
 
             switch (choice) {
-                case 1:
-                    System.out.println("Enter flight number: ");
+                case 1: {
+                    System.out.print("Enter flight number: ");
                     String flightNumber = scanner.nextLine();
-                    Flight flight = schedule.getFlight(flightNumber);
 
-                    if (flight != null) {
-                        System.out.println("Enter passenger name: ");
-                        String passengerName = scanner.nextLine();
-                        Passenger passenger = new Passenger(passengerName);
-                        flight.addPassenger(passenger);
-                        System.out.println("Passenger with name " + passengerName + " added to flight " + flightNumber + ".");
-                    } else {
-                        System.out.println("Flight " + flightNumber + " does not exist.");
+                    System.out.print("Enter departure date and time (yyyy-MM-dd HH:mm): ");
+                    String dateTimeInput = scanner.nextLine();
+                    try {
+                        LocalDateTime departureDateTime = LocalDateTime.parse(dateTimeInput, formatter);
+                        Flight newFlight = new Flight(flightNumber, departureDateTime);
+                        schedule.addFlight(newFlight);
+                        System.out.println("Flight added successfully!");
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date and time format. Please use 'yyyy-MM-dd HH:mm'.");
                     }
-                    break;
+                }
+                case 2: {
+                    System.out.print("Enter flight number: ");
+                    String flightNum = scanner.nextLine();
 
-                case 2:
-                    System.out.println("Enter Flight number: ");
-                    flightNumber = scanner.nextLine();
-                    flight = schedule.getFlight(flightNumber);
-
-                    if (flight != null) {
-                        flight.printPassengers();
-                    } else {
-                        System.out.println("Flight " + flightNumber + " does not exist,");
+                    System.out.print("Enter departure date and time (yyyy-MM-dd HH:mm): ");
+                    String dateTime = scanner.nextLine();
+                    try {
+                        LocalDateTime dateTimeParsed = LocalDateTime.parse(dateTime, formatter);
+                        Flight flight = schedule.findFlight(flightNum, dateTimeParsed);
+                        if (flight != null) {
+                            System.out.print("Enter passenger name: ");
+                            String passengerName = scanner.nextLine();
+                            flight.addPassenger(new Passenger(passengerName));
+                            System.out.println("Passenger added successfully!");
+                        } else {
+                            System.out.println("Flight not found.");
+                        }
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date and time format. Please use 'yyyy-MM-dd HH:mm'.");
                     }
-                    break;
+                }
+                case 3: schedule.printAllFlights();
+                case 4: {
+                    System.out.print("Enter flight number: ");
+                    String flightNo = scanner.nextLine();
 
-                case 3:
-                    schedule.printFlights();
-                    break;
-
-                case 4:
+                    System.out.print("Enter departure date and time (yyyy-MM-dd HH:mm): ");
+                    String flightDateTime = scanner.nextLine();
+                    try {
+                        LocalDateTime flightDT = LocalDateTime.parse(flightDateTime, formatter);
+                        Flight foundFlight = schedule.findFlight(flightNo, flightDT);
+                        if (foundFlight != null) {
+                            foundFlight.printPassengerList();
+                        } else {
+                            System.out.println("Flight not found.");
+                        }
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date and time format. Please use 'yyyy-MM-dd HH:mm'.");
+                    }
+                }
+                case 5: {
                     System.out.println("Exiting...");
                     scanner.close();
                     return;
-
-                default:
-                    System.out.println("Invalid input. Please try again.");
+                }
+                default: System.out.println("Invalid option. Please select a number between 1 and 5.");
             }
-
         }
     }
 }
