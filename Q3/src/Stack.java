@@ -4,9 +4,9 @@ import java.util.NoSuchElementException;
 
 // Stack class implementing Iterable interface
 public class Stack<T> implements Iterable<T> {
-    private ArrayList<T> stack; // ArrayList to store stack elements
+    // The T is a placeholder for a type that will be specified when the class is instantiated.
+    private ArrayList<T> stack;
 
-    // Constructor for Stack
     public Stack() {
         this.stack = new ArrayList<>();
     }
