@@ -1,0 +1,76 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.6'
+	id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'ch.noseryoung'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.jetbrains:annotations:24.0.0'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation "io.jsonwebtoken:jjwt:0.9.1"
+	implementation "javax.xml.bind:jaxb-api:2.4.0-b180725.0427"
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+}
+
+// JWT-Input: method for reading .env-files if it exists with specific name
+def readEnvironmentFileIfExists(String envFilename) {
+	def envVars = [:]
+	def envFile = file(envFilename)
+	if (envFile.exists()) {
+		envFile.readLines().each {
+			if (it != "" && it.charAt(0) != (char) '#') {
+				def (key, value) = it.tokenize("=")
+				key = key.toString()
+				value = value.toString()
+				if (System.getenv(key) == null) {
+					envVars[key] = value
+				}
+			}
+		}
+	}
+
+	return envVars
+}
+
+// JWT-Input: task in gradle for writing values from .env file into environment variables
+tasks.withType(JavaExec) { javaExec ->
+	doFirst {
+		def envVars = readEnvironmentFileIfExists(".env")
+		for (envVar in envVars) {
+			environment(envVar.key, envVar.value)
+		}
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
