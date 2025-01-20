@@ -35,6 +35,13 @@ This exludes the validation logic from the addDish method.
 ## Possible exception in Sequence diagram
 ![image](https://github.com/user-attachments/assets/50b91295-bbd7-436b-a502-6776e849af4a)
 
+## Polymorphism
+Implements one Interface
+![image](https://github.com/user-attachments/assets/3e6d1b50-c88d-4449-855b-4b930689f4e6)
+Implements two interfaces
+![image](https://github.com/user-attachments/assets/a262e188-8ea1-4155-872e-e728610dcc58)
+
+
 
 
 ### Getting all dishes
