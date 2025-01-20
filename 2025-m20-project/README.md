@@ -20,6 +20,7 @@ Changes to a specific strategy (e.g., updating discount logic) don't affect the 
 
 ## Delegation
 This exludes the validation logic from the addDish method.  
+![image](https://github.com/user-attachments/assets/1f8174de-5de6-4e06-81a6-e6c3090aa2ed)
 <img width="712" alt="image" src="https://github.com/user-attachments/assets/f8117e3f-73ca-492c-8bd5-ff09b804b788" />
 
 
