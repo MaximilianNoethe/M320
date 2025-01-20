@@ -1,5 +1,6 @@
 package ch.noseryoung.backend_team7.domain.dish;
 
+import ch.noseryoung.backend_team7.domain.dish.strategy.PricingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +50,13 @@ public class DishService implements DishServiceInterface {
             throw new InstanceNotFoundException("Dish with id " + id + " could not be found.");
         }
         dishRepository.deleteById(id);
+    }
+
+    public void applyPricingStrategy(int dishId, PricingStrategy strategy) {
+        Dish dish = dishRepository.findById(dishId)
+                .orElseThrow(() -> new IllegalArgumentException("Dish not found"));
+        dish.setPricingStrategy(strategy);
+        // Optionally save the strategy change in the database
+        dishRepository.save(dish);
     }
 }
