@@ -31,6 +31,9 @@ This exludes the validation logic from the addDish method.
 ![image](https://github.com/user-attachments/assets/364b37ba-9596-4192-8b6b-87eea2ed6254)
 ![image](https://github.com/user-attachments/assets/f4590f47-4131-4ca3-a86c-699e487f8546)
 
+## Possible exception in Sequence diagram
+![image](https://github.com/user-attachments/assets/50b91295-bbd7-436b-a502-6776e849af4a)
+
 
 
 ### Getting all dishes
