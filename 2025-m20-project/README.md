@@ -23,8 +23,14 @@ This exludes the validation logic from the addDish method.
 <img width="712" alt="image" src="https://github.com/user-attachments/assets/f8117e3f-73ca-492c-8bd5-ff09b804b788" />
 
 
-### Strategy pattern
+## Strategy pattern
 ![image](https://github.com/user-attachments/assets/aaddf214-6232-4f6c-b98a-c867dff5e367)
+
+
+## Interfaces
+![image](https://github.com/user-attachments/assets/364b37ba-9596-4192-8b6b-87eea2ed6254)
+![image](https://github.com/user-attachments/assets/f4590f47-4131-4ca3-a86c-699e487f8546)
+
 
 
 ### Getting all dishes
