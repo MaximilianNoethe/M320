@@ -6,35 +6,36 @@ import org.springframework.stereotype.Service;
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
-public class DishService {
+public class DishService implements DishServiceInterface {
     @Autowired
-    DishRepository dishRepository;
+    private DishDelegate dishDelegate;
+
+    @Autowired
+    private DishRepository dishRepository;
 
     public DishService() {
-
     }
 
+    @Override
     public List<Dish> getAllDishes() {
         return dishRepository.findAll();
     }
 
+    @Override
     public Dish getById(int dishId) throws InstanceNotFoundException {
         return dishRepository.findById(dishId)
                 .orElseThrow(() -> new InstanceNotFoundException("Dish with id " + dishId + " could not be found."));
     }
 
+    @Override
     public Dish addDish(Dish newDish) throws InstanceAlreadyExistsException {
-        if (dishRepository.existsById(newDish.getDishId())) {
-            throw new InstanceAlreadyExistsException("Dish with id " + newDish.getDishId() + " already exists.");
-        }
-        return dishRepository.save(newDish);
+        return dishDelegate.addDish(newDish);
     }
 
+    @Override
     public Dish updateById(int dishId, Dish dish) throws InstanceNotFoundException {
-
         if (!dishRepository.existsById(dishId)) {
             throw new InstanceNotFoundException("Dish with id " + dishId + " could not be found.");
         }
@@ -42,6 +43,7 @@ public class DishService {
         return dishRepository.save(dish);
     }
 
+    @Override
     public void deleteDish(int id) throws InstanceNotFoundException {
         if (!dishRepository.existsById(id)) {
             throw new InstanceNotFoundException("Dish with id " + id + " could not be found.");
