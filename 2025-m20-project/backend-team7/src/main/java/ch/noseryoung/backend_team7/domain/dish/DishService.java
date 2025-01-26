@@ -1,5 +1,6 @@
 package ch.noseryoung.backend_team7.domain.dish;
 
+import ch.noseryoung.backend_team7.domain.dish.strategy.ForexDiscount;
 import ch.noseryoung.backend_team7.domain.dish.strategy.PricingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,4 +60,12 @@ public class DishService implements DishServiceInterface {
         // Optionally save the strategy change in the database
         dishRepository.save(dish);
     }
+    public void applyForexDiscount(int dishId, double discountPercentage, double exchangeRate, String targetCurrency) {
+        Dish dish = dishRepository.findById(dishId)
+                .orElseThrow(() -> new IllegalArgumentException("Dish not found"));
+
+        dish.setPricingStrategy(new ForexDiscount(discountPercentage, exchangeRate, targetCurrency));
+        dishRepository.save(dish);
+    }
+
 }
