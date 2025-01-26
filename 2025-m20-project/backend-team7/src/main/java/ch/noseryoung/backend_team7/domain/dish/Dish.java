@@ -1,5 +1,6 @@
 package ch.noseryoung.backend_team7.domain.dish;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -9,12 +10,12 @@ import lombok.Getter;
 import lombok.Setter;
 import ch.noseryoung.backend_team7.domain.dish.strategy.*;
 
-
 @Entity
 @Getter
 @Setter
 @Table(name = "dish")
 public class Dish {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dish_id")
@@ -44,27 +45,23 @@ public class Dish {
     @Min(value = 0, message = "Price must be a positive value")
     private Double price;
 
-    @Transient // Exclude from persistence
+    @Transient
+    @JsonIgnore
     private PricingStrategy pricingStrategy = new NoDiscountStrategy(); // Default strategy
 
-    public Dish(int dishId, String dishName, String description, String image, String region, Double price) {
-        this.dishId = dishId;
-        this.dishName = dishName;
-        this.description = description;
-        this.image = image;
-        this.region = region;
-        this.price = price;
-    }
-
-    public Dish() {}
-
-    // Method to calculate the final price using the current strategy
     public double getFinalPrice() {
         return pricingStrategy.calculatePrice(this);
     }
 
-    // Method to set a custom pricing strategy
     public void setPricingStrategy(PricingStrategy pricingStrategy) {
         this.pricingStrategy = pricingStrategy;
+    }
+
+    public String getFormattedPrice() {
+        if (pricingStrategy instanceof ForeignExchange) {
+            ForeignExchange fx = (ForeignExchange) pricingStrategy;
+            return String.format("%.2f %s", getFinalPrice(), ((ForexDiscount) fx).getTargetCurrency());
+        }
+        return String.format("%.2f USD", getFinalPrice()); // Default currency
     }
 }

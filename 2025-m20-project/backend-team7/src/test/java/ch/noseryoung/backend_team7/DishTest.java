@@ -5,16 +5,16 @@ import ch.noseryoung.backend_team7.domain.dish.strategy.*;
 
 public class DishTest {
     public static void main(String[] args) {
-        // Create dishes
-        Dish pizza = new Dish(1, "Pizza", "Delicious cheese pizza", "image.jpg", "Italian", 15.0);
-        Dish pasta = new Dish(2, "Pasta", "Tasty pasta dish", "image.jpg", "Italian", 12.0);
+        // Create a Dish
+        Dish sushi = new Dish();
+        sushi.setDishName("Sushi");
+        sushi.setPrice(20.0);
 
-        // Set pricing strategies
-        pizza.setPricingStrategy(new PercentageDiscountStrategy(20)); // 20% off
-        pasta.setPricingStrategy(new FixedAmountDiscountStrategy(3)); // $3 off
+        // Apply ForexDiscount strategy
+        ForexDiscount forexDiscount = new ForexDiscount(10, 0.85, "EUR"); // 10% off, convert to EUR
+        sushi.setPricingStrategy(forexDiscount);
 
-        // Calculate final prices
-        System.out.println(pizza.getDishName() + " Final Price: $" + pizza.getFinalPrice());
-        System.out.println(pasta.getDishName() + " Final Price: $" + pasta.getFinalPrice());
+        // Display Final Price
+        System.out.println(sushi.getDishName() + " Final Price: " + sushi.getFormattedPrice());
     }
 }
