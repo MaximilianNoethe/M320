@@ -1,4 +1,5 @@
 package ch.noseryoung.backend_team7.domain.dish;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -6,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import ch.noseryoung.backend_team7.domain.dish.strategy.*;
+
 
 @Entity
 @Getter
@@ -41,6 +44,9 @@ public class Dish {
     @Min(value = 0, message = "Price must be a positive value")
     private Double price;
 
+    @Transient // Exclude from persistence
+    private PricingStrategy pricingStrategy = new NoDiscountStrategy(); // Default strategy
+
     public Dish(int dishId, String dishName, String description, String image, String region, Double price) {
         this.dishId = dishId;
         this.dishName = dishName;
@@ -49,7 +55,16 @@ public class Dish {
         this.region = region;
         this.price = price;
     }
-    public Dish(){
 
+    public Dish() {}
+
+    // Method to calculate the final price using the current strategy
+    public double getFinalPrice() {
+        return pricingStrategy.calculatePrice(this);
+    }
+
+    // Method to set a custom pricing strategy
+    public void setPricingStrategy(PricingStrategy pricingStrategy) {
+        this.pricingStrategy = pricingStrategy;
     }
 }

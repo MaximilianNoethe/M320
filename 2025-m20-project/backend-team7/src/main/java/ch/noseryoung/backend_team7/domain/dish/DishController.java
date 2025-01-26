@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequestMapping("/dish")
 public class DishController {
     @Autowired
-    DishService dishService;
+    private DishServiceInterface dishService;
 
     /**
      * Gets all dishes
@@ -68,7 +68,7 @@ public class DishController {
      * @throws InstanceAlreadyExistsException if a dish with the same id already exists
      */
     @PutMapping(value = "/{dishId}")
-    @PreAuthorize("hasAuthority('PUT')")
+    @PreAuthorize("hasAuthority('POST')")
     @Operation(summary = "Update a dish", description = "Updates the information of an existing dish and returns a JSON object with the status code 200.")
     public ResponseEntity<Dish> updateDish(@PathVariable("dishId") int dishId, @RequestBody Dish dish) throws InstanceNotFoundException, InstanceAlreadyExistsException {
         return ResponseEntity.status(200).body(dishService.updateById(dishId, dish));
