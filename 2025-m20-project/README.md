@@ -56,3 +56,5 @@ Implements two interfaces
 ### Update dish
 ![image](https://github.com/user-attachments/assets/11ac4cd3-ffc8-4057-84eb-75c882bea2e7)
 
+![image](https://github.com/user-attachments/assets/804fee75-9b5d-4065-b742-19f4869da1bc)
+
